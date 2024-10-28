@@ -4,6 +4,25 @@
   
     
     <entry>
+      <title>hexo图片加载问题</title>
+      <link href="/2024/10/28/hexo%E5%9B%BE%E7%89%87%E5%8A%A0%E8%BD%BD%E9%97%AE%E9%A2%98/"/>
+      <url>/2024/10/28/hexo%E5%9B%BE%E7%89%87%E5%8A%A0%E8%BD%BD%E9%97%AE%E9%A2%98/</url>
+      
+        <content type="html"><![CDATA[<h3 id="hexo无法加载本地图片的问题"><a href="#hexo无法加载本地图片的问题" class="headerlink" title="hexo无法加载本地图片的问题"></a>hexo无法加载本地图片的问题</h3><h4 id="1-下载hexo-asset-image插件"><a href="#1-下载hexo-asset-image插件" class="headerlink" title="1. 下载hexo-asset-image插件"></a>1. 下载hexo-asset-image插件</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-asset-image --save</span><br></pre></td></tr></table></figure><h4 id="2-修改-config-yml文件，将hexo-asset-image设置为true"><a href="#2-修改-config-yml文件，将hexo-asset-image设置为true" class="headerlink" title="2. 修改_config.yml文件，将hexo-asset-image设置为true"></a>2. 修改_config.yml文件，将hexo-asset-image设置为true</h4><h4 id="3-新建文章-hexo-new-“我的文章”-然后在文章中插入图片，如："><a href="#3-新建文章-hexo-new-“我的文章”-然后在文章中插入图片，如：" class="headerlink" title="3. 新建文章 hexo new “我的文章”, 然后在文章中插入图片，如："></a>3. 新建文章 hexo new “我的文章”, 然后在文章中插入图片，如：</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">![](我的文章/logo.png)</span><br></pre></td></tr></table></figure><h4 id="4-如果图片还不能显示，这是插件bug未修复"><a href="#4-如果图片还不能显示，这是插件bug未修复" class="headerlink" title="4. 如果图片还不能显示，这是插件bug未修复"></a>4. 如果图片还不能显示，这是插件bug未修复</h4><p>解决方案：</p><ol><li>找到node_modules\hexo-asset-image\index.js文件</li><li>找到if(&#x2F;.*/index.html$&#x2F;.test(link)) （大概在17行左右）</li><li>修改成如下代码 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">if(/.*\/index\.html$/.test(link)) &#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br><span class="line">else if (link.charAt(link.length - 1) === &#x27;/&#x27;) &#123;</span><br><span class="line">    // link 是文件夹路径情形时</span><br><span class="line">    var endPos = link.length - 1;</span><br><span class="line">&#125;</span><br><span class="line">else &#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li><li>找到$(‘img’).each(function()) 代码，将其中 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$(this).attr(&#x27;src&#x27;, config.root + link + src);</span><br><span class="line">console.info&amp;&amp;console.info(&quot;update link as:--&gt;&quot;+config.root + link + src);</span><br></pre></td></tr></table></figure> 改为相对路径引用 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$(this).attr(&#x27;src&#x27;, link + src);</span><br><span class="line">console.info&amp;&amp;console.info(&quot;update link as:--&gt;&quot;+link + src);</span><br></pre></td></tr></table></figure></li><li>重新执行hexo clean、hexo g、hexo s</li></ol>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> 博客搭建 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>PBR理论和渲染原理</title>
       <link href="/2024/10/27/PBR%E7%90%86%E8%AE%BA%E5%92%8C%E6%B8%B2%E6%9F%93%E5%8E%9F%E7%90%86/"/>
       <url>/2024/10/27/PBR%E7%90%86%E8%AE%BA%E5%92%8C%E6%B8%B2%E6%9F%93%E5%8E%9F%E7%90%86/</url>
